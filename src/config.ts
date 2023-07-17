@@ -1,6 +1,7 @@
 import GameScene from "./scenes/GameScene";
 import LoadingScene from "./scenes/LoadingScene";
 import MenuScene from "./scenes/MenuScene";
+import PauseScene from "./scenes/PauseScene";
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
     title: 'Tank',
@@ -9,7 +10,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     version: '2.0',
     type: Phaser.AUTO,
     parent: 'Game',
-    scene: [LoadingScene, MenuScene, GameScene],
+    scene: [LoadingScene, MenuScene, GameScene, PauseScene],
     input: {
         keyboard: true,
     },

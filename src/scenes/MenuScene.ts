@@ -2,20 +2,12 @@ import { SCENE } from '../const/const'
 import Button from '../objects/component/Button'
 
 export default class MenuScene extends Phaser.Scene {
-    private startKey: Phaser.Input.Keyboard.Key
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
 
     public constructor() {
         super({
             key: SCENE.MENU,
         })
-    }
-
-    public init(): void {
-        if (this.input.keyboard)
-            this.startKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
-        else console.log('No input keyboard!!!')
-        this.startKey.isDown = false
     }
 
     public create(): void {
@@ -57,8 +49,6 @@ export default class MenuScene extends Phaser.Scene {
                         this.cameras.main.scrollX = 2 * centerX * progress
                     },
                 })
-
-                //this.scene.start(SCENE.GAME)
             })
 
         new Button({
@@ -92,11 +82,5 @@ export default class MenuScene extends Phaser.Scene {
             .setFunction(() => {
                 this.scene.start(SCENE.GAME)
             })
-    }
-
-    public update(): void {
-        if (this.startKey.isDown) {
-            this.scene.start(SCENE.GAME)
-        }
     }
 }
