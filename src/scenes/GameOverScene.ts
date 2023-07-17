@@ -2,11 +2,18 @@ import { SCENE } from '../const/const'
 import Music from '../objects/Music'
 import Button from '../objects/component/Button'
 
-export default class SettingScene extends Phaser.Scene {
+export default class GameOverScene extends Phaser.Scene {
+    private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
+    private score: number
+
     public constructor() {
         super({
-            key: SCENE.SETTING,
+            key: SCENE.GAMEOVER,
         })
+    }
+
+    public init(data: {score: number}): void {
+        this.score = data.score
     }
 
     public create(): void {
@@ -15,48 +22,55 @@ export default class SettingScene extends Phaser.Scene {
 
         this.add.rectangle(0, 0, 2 * centerX, 2 * centerY, 0x123456).setOrigin(0, 0)
 
-        this.add.bitmapText(centerX, centerY - 200, 'font', 'SETTING', 100).setOrigin(0.5, 0.5)
-
-        const text = this.add
-            .text(centerX, centerY, `${Math.round(Music.getVolume() * 100)}`, {
-                fontFamily: 'Cambria',
-                fontSize: 50,
-                fontStyle: 'bold',
-            })
-            .setOrigin(0.5, 0.5)
+        this.bitmapTexts.push(
+            this.add
+                .bitmapText(
+                    this.sys.canvas.width / 2,
+                    this.sys.canvas.height / 2 - 200,
+                    'font',
+                    'GAME OVER',
+                    100
+                )
+                .setOrigin(0.5, 0.5)
+        )
 
         new Button({
             scene: this,
-            x: centerX - 100,
-            y: centerY,
-            width: 75,
+            x: centerX,
+            y: centerY - 100,
+            width: 200,
             height: 75,
             color: 0x00a86b,
             hoverColor: 0x2e8b57,
         })
             .setOrigin(0.5, 0.5)
-            .setContent('-')
-            .setTextSize(100)
+            .setContent('Restart')
+            .setTextSize(50)
             .setFunction(() => {
-                Music.setVolume(Music.getVolume() - 0.1)
-                text.setText(`${Math.round(Music.getVolume() * 100)}`)
+                this.scene.transition({
+                    target: SCENE.GAME,
+                    duration: 500,
+                    moveBelow: true,
+                    onUpdate: (progress: number) => {
+                        this.cameras.main.scrollX = 2 * centerX * progress
+                    },
+                })
             })
 
         new Button({
             scene: this,
-            x: centerX + 100,
+            x: centerX,
             y: centerY,
-            width: 75,
+            width: 200,
             height: 75,
             color: 0x00a86b,
             hoverColor: 0x2e8b57,
         })
             .setOrigin(0.5, 0.5)
-            .setContent('+')
-            .setTextSize(100)
+            .setContent('Setting')
+            .setTextSize(50)
             .setFunction(() => {
-                Music.setVolume(Music.getVolume() + 0.1)
-                text.setText(`${Math.round(Music.getVolume() * 100)}`)
+                this.scene.start(SCENE.SETTING)
             })
 
         new Button({
@@ -74,5 +88,7 @@ export default class SettingScene extends Phaser.Scene {
             .setFunction(() => {
                 this.scene.start(SCENE.MENU)
             })
+
+        Music.stop()
     }
 }

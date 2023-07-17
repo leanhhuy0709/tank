@@ -1,4 +1,5 @@
 import { SCENE } from '../const/const'
+import Music from '../objects/Music'
 import Button from '../objects/component/Button'
 
 export default class MenuScene extends Phaser.Scene {
@@ -80,7 +81,9 @@ export default class MenuScene extends Phaser.Scene {
             .setContent('Exit')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.GAME)
+                this.scene.start(SCENE.MENU)
             })
+
+        Music.stop()
     }
 }

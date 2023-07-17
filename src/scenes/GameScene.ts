@@ -16,6 +16,8 @@ export default class GameScene extends Phaser.Scene {
 
     private target: Phaser.Math.Vector2
 
+    public score: number
+
     public constructor() {
         super({
             key: SCENE.GAME,
@@ -113,19 +115,20 @@ export default class GameScene extends Phaser.Scene {
             y: 30,
             width: 60,
             height: 60,
-            color: 0x6694f6,
-            hoverColor: 0x164e9b,
+            color: 0x00a86b,
+            hoverColor: 0x2e8b57,
         })
             .setOrigin(0.5, 0.5)
             .setContent('||')
             .setTextSize(40)
-            .setTextColor('#ffffff')
             .setFunction(() => {
                 this.scene.pause(SCENE.GAME)
                 this.scene.launch(SCENE.PAUSE)
             })
 
         Music.play()
+
+        this.score = 0
     }
 
     public update(): void {

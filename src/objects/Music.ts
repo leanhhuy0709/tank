@@ -12,6 +12,8 @@ export default class Music {
     }
 
     public static setVolume(volume: number): void {
+        if (volume < 0) volume = 0
+        if (volume > 1) volume = 1
         Music.music.setVolume(volume)
     }
 

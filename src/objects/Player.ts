@@ -1,5 +1,7 @@
 import { Bullet } from './Bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
+import { SCENE } from '../const/const'
+import GameScene from '../scenes/GameScene'
 
 export class Player extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -174,7 +176,8 @@ export class Player extends Phaser.GameObjects.Image {
         } else {
             this.health = 0
             this.active = false
-            this.scene.scene.start('MenuScene')
+            const gameScene = this.scene as GameScene
+            this.scene.scene.start(SCENE.GAMEOVER, {score: gameScene.score})
         }
     }
 }

@@ -3,7 +3,8 @@ export enum SCENE {
     MENU = 'MenuScene',
     GAME = 'GameScene',
     PAUSE = 'PauseScene',
-    SETTING = 'SettingScene'
+    SETTING = 'SettingScene',
+    GAMEOVER = 'GameOverScene'
 }
 
 

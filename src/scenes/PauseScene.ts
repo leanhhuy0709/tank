@@ -42,7 +42,7 @@ export default class PauseScene extends Phaser.Scene {
             hoverColor: 0x2e8b57,
         })
             .setOrigin(0.5, 0.5)
-            .setContent('Try again')
+            .setContent('Restart')
             .setTextSize(50)
             .setFunction(() => {
                 this.scene.start(SCENE.GAME)
@@ -58,10 +58,10 @@ export default class PauseScene extends Phaser.Scene {
             hoverColor: 0x2e8b57,
         })
             .setOrigin(0.5, 0.5)
-            .setContent('Sound: ON')
+            .setContent('Setting')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.GAME)
+                this.scene.start(SCENE.SETTING)
             })
 
         new Button({
@@ -77,7 +77,7 @@ export default class PauseScene extends Phaser.Scene {
             .setContent('Exit')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.GAME)
+                this.scene.start(SCENE.MENU)
             })
     }
 }
