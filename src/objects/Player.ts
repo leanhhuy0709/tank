@@ -172,6 +172,7 @@ export class Player extends Phaser.GameObjects.Image {
     public updateHealth(): void {
         if (this.health > 0) {
             //this.health -= 0.05
+            this.health -= 1
             this.redrawLifebar()
         } else {
             this.health = 0
@@ -179,5 +180,9 @@ export class Player extends Phaser.GameObjects.Image {
             const gameScene = this.scene as GameScene
             this.scene.scene.start(SCENE.GAMEOVER, {score: gameScene.score})
         }
+    }
+
+    public getHealth(): number {
+        return this.health
     }
 }

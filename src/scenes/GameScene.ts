@@ -4,6 +4,7 @@ import { Obstacle } from '../objects/obstacles/Obstacle'
 import { SCENE } from '../const/const'
 import Button from '../objects/component/Button'
 import Music from '../objects/Music'
+import Score from '../Score'
 
 export default class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -18,7 +19,7 @@ export default class GameScene extends Phaser.Scene {
 
     private pauseBtn: Button
 
-    public score: number
+    public score: Score
 
     public constructor() {
         super({
@@ -133,7 +134,10 @@ export default class GameScene extends Phaser.Scene {
 
         Music.play()
 
-        this.score = 0
+        this.score = new Score({
+            numTankKilled: 0,
+            health: this.player.getHealth() * 100,
+        })
     }
 
     public update(): void {
@@ -158,23 +162,29 @@ export default class GameScene extends Phaser.Scene {
 
         Music.update()
 
-        //handle camera following
-        let x = this.player.body.x - this.cameras.main.width / 2
-        let y = this.player.body.y - this.cameras.main.height / 2
+        this.updateCamera()
+    }
 
-        if (x < 0) x = 0
-        if (y < 0) y = 0
+    private updateCamera(): void {
+        if (this.player.body) {
+            //handle camera following
+            let x = this.player.body.x - this.cameras.main.width / 2
+            let y = this.player.body.y - this.cameras.main.height / 2
 
-        if (x > this.layer.width - this.cameras.main.width)
-            x = this.layer.width - this.cameras.main.width
+            if (x < 0) x = 0
+            if (y < 0) y = 0
 
-        if (y > this.layer.height - this.cameras.main.height)
-            y = this.layer.height - this.cameras.main.height
+            if (x > this.layer.width - this.cameras.main.width)
+                x = this.layer.width - this.cameras.main.width
 
-        this.cameras.main.scrollX = x
-        this.cameras.main.scrollY = y
+            if (y > this.layer.height - this.cameras.main.height)
+                y = this.layer.height - this.cameras.main.height
 
-        this.pauseBtn.setPos(x + this.cameras.main.width - 30, y + 30)
+            this.cameras.main.scrollX = x
+            this.cameras.main.scrollY = y
+
+            this.pauseBtn.setPos(x + this.cameras.main.width - 30, y + 30)
+        }
     }
 
     private convertObjects(): void {

@@ -1,10 +1,11 @@
+import Score from '../Score'
 import { SCENE } from '../const/const'
 import Music from '../objects/Music'
 import Button from '../objects/component/Button'
 
 export default class GameOverScene extends Phaser.Scene {
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
-    private score: number
+    private score: Score
 
     public constructor() {
         super({
@@ -12,7 +13,7 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
-    public init(data: {score: number}): void {
+    public init(data: {score: Score}): void {
         this.score = data.score
     }
 
@@ -26,7 +27,7 @@ export default class GameOverScene extends Phaser.Scene {
             this.add
                 .bitmapText(
                     this.sys.canvas.width / 2,
-                    this.sys.canvas.height / 2 - 200,
+                    this.sys.canvas.height / 2 - 400,
                     'font',
                     'GAME OVER',
                     100
@@ -37,7 +38,7 @@ export default class GameOverScene extends Phaser.Scene {
         new Button({
             scene: this,
             x: centerX,
-            y: centerY - 100,
+            y: centerY,
             width: 200,
             height: 75,
             color: 0x00a86b,
@@ -60,7 +61,7 @@ export default class GameOverScene extends Phaser.Scene {
         new Button({
             scene: this,
             x: centerX,
-            y: centerY,
+            y: centerY + 100,
             width: 200,
             height: 75,
             color: 0x00a86b,
@@ -76,7 +77,7 @@ export default class GameOverScene extends Phaser.Scene {
         new Button({
             scene: this,
             x: centerX,
-            y: centerY + 100,
+            y: centerY + 200,
             width: 200,
             height: 75,
             color: 0x00a86b,
@@ -90,5 +91,7 @@ export default class GameOverScene extends Phaser.Scene {
             })
 
         Music.stop()
+
+        this.score.createScoreBoard(this, centerX, centerY - 200)
     }
 }

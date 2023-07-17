@@ -1,5 +1,6 @@
 import { Bullet } from './Bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
+import GameScene from '../scenes/GameScene'
 
 export class Enemy extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -121,6 +122,8 @@ export class Enemy extends Phaser.GameObjects.Image {
         } else {
             this.health = 0
             this.active = false
+            const gameScene = this.scene as GameScene
+            gameScene.score.addNumTankKilled()
         }
     }
 }
