@@ -1,6 +1,6 @@
 import { SCENE } from "../const/const"
 
-export class MenuScene extends Phaser.Scene {
+export default class MenuScene extends Phaser.Scene {
     private startKey: Phaser.Input.Keyboard.Key
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
 

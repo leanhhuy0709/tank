@@ -3,7 +3,7 @@ import { Enemy } from '../objects/Enemy'
 import { Obstacle } from '../objects/obstacles/Obstacle'
 import { SCENE } from '../const/const'
 
-export class GameScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
     private tileset: Phaser.Tilemaps.Tileset
     private layer: Phaser.Tilemaps.TilemapLayer

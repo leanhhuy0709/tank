@@ -1,6 +1,6 @@
 import { SCENE } from "../const/const"
 
-export class BootScene extends Phaser.Scene {
+export default class LoadingScene extends Phaser.Scene {
     private loadingBar: Phaser.GameObjects.Graphics
     private progressBar: Phaser.GameObjects.Graphics
 
