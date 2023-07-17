@@ -2,6 +2,7 @@ import { Player } from '../objects/Player'
 import { Enemy } from '../objects/Enemy'
 import { Obstacle } from '../objects/obstacles/Obstacle'
 import { SCENE } from '../const/const'
+import Button from '../objects/component/Button'
 
 export default class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
@@ -25,6 +26,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     public create(): void {
+        const centerX = this.sys.canvas.width / 2
+        const centerY = this.sys.canvas.height / 2
+
         // create tilemap from tiled JSON
         this.map = this.make.tilemap({ key: 'levelMap' })
 
@@ -101,7 +105,25 @@ export default class GameScene extends Phaser.Scene {
             return null
         }, this)
 
-        this.cameras.main.startFollow(this.player)
+        // this.cameras.main.startFollow(this.player)
+
+        new Button({
+            scene: this,
+            x: 2 * centerX - 30,
+            y: 30,
+            width: 60,
+            height: 60,
+            color: 0x6694f6,
+            hoverColor: 0x164e9b,
+        })
+            .setOrigin(0.5, 0.5)
+            .setContent('||')
+            .setTextSize(40)
+            .setTextColor('#ffffff')
+            .setFunction(() => {
+                this.scene.pause(SCENE.GAME)
+                this.scene.launch(SCENE.PAUSE)
+            })
     }
 
     public update(): void {
