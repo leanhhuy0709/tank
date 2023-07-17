@@ -64,7 +64,7 @@ export default class MenuScene extends Phaser.Scene {
             .setContent('Setting')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.GAME)
+                this.scene.start(SCENE.SETTING)
             })
 
         new Button({

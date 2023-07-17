@@ -30,7 +30,6 @@ export default class PauseScene extends Phaser.Scene {
             .setFunction(() => {
                 this.scene.stop(SCENE.PAUSE)
                 this.scene.resume(SCENE.GAME)
-                
             })
 
         new Button({

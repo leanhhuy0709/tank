@@ -1,13 +1,14 @@
 import { MUSIC } from '../const/const'
 
 export default class Music {
-    public static music:
+    private static music:
         | Phaser.Sound.WebAudioSound
         | Phaser.Sound.NoAudioSound
         | Phaser.Sound.HTML5AudioSound
 
     public static init(scene: Phaser.Scene): void {
-        Music.music = scene.sound.add(MUSIC.Devonshire_Waltz_Allegretto, { volume: 0.5 })
+        Music.music = scene.sound.add(MUSIC.Devonshire_Waltz_Allegretto)
+        Music.music.volume = 0.5
     }
 
     public static setVolume(volume: number): void {
@@ -34,5 +35,9 @@ export default class Music {
         if (!Music.music.isPlaying) {
             Music.play()
         }
+    }
+
+    public static getVolume(): number {
+        return Music.music.volume
     }
 }
