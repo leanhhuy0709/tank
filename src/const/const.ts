@@ -9,5 +9,7 @@ export enum SCENE {
 
 
 export enum MUSIC {
-    Devonshire_Waltz_Allegretto = 'Devonshire Waltz Allegretto'
+    Devonshire_Waltz_Allegretto = 'Devonshire Waltz Allegretto',
+    Shoot_SFX = 'shoot',
+    Hit_SFX = 'hit'
 }

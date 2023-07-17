@@ -2,6 +2,7 @@ import { Bullet } from './Bullet'
 import { IImageConstructor } from '../interfaces/image.interface'
 import { SCENE } from '../const/const'
 import GameScene from '../scenes/GameScene'
+import Music from './Music'
 
 export class Player extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
@@ -155,6 +156,8 @@ export class Player extends Phaser.GameObjects.Image {
                         texture: 'bulletBlue',
                     })
                 )
+
+                Music.shootSfx.play()
 
                 this.lastShoot = this.scene.time.now + 80
             }
