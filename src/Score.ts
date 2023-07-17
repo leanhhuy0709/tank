@@ -9,7 +9,6 @@ export default class Score {
     }
 
     public createScoreBoard(scene: Phaser.Scene, x: number, y: number): void {
-
         let highScore = Number(localStorage.getItem('highscore'))
 
         if (!highScore) highScore = 0
@@ -52,7 +51,7 @@ export default class Score {
             })
             .setOrigin(0, 0.5)
 
-        scene.add
+        const text1 = scene.add
             .text(x + 280, y - 70, `${this.numTankKilled} x 100 = ${this.numTankKilled * 100}`, {
                 fontSize: '30px',
                 fontFamily: 'Cambria',
@@ -60,15 +59,8 @@ export default class Score {
             })
             .setOrigin(1, 0.5)
 
-        scene.add
+        const text2 = scene.add
             .text(x + 280, y - 20, `${this.health} x 75 = ${this.health * 75}`, {
-                fontSize: '30px',
-                fontFamily: 'Cambria',
-                color: '#000000',
-            })
-            .setOrigin(1, 0.5)
-        scene.add
-            .text(x + 280, y + 30, `${this.numTankKilled * 100 + this.health * 75}`, {
                 fontSize: '30px',
                 fontFamily: 'Cambria',
                 color: '#000000',
@@ -76,7 +68,7 @@ export default class Score {
             .setOrigin(1, 0.5)
 
         highScore = Math.max(this.numTankKilled * 100 + this.health * 75, highScore)
-        
+
         scene.add
             .text(x + 280, y + 80, `${highScore}`, {
                 fontSize: '30px',
@@ -86,6 +78,27 @@ export default class Score {
             .setOrigin(1, 0.5)
 
         localStorage.setItem('highscore', highScore.toString())
+
+        const tmp = { val: 0 }
+
+        scene.tweens.add({
+            targets: tmp,
+            val: 1,
+            duration: 2000,
+            onUpdate: () => {
+                text1.setText(`${this.numTankKilled} x 100 = ${Math.floor(tmp.val * this.numTankKilled * 100)}`)
+                text2.setText(`${this.health} x 75 = ${Math.floor(tmp.val * this.health * 75)}`)
+            },
+            onComplete: () => {
+                scene.add
+                    .text(x + 280, y + 30, `${this.numTankKilled * 100 + this.health * 75}`, {
+                        fontSize: '30px',
+                        fontFamily: 'Cambria',
+                        color: '#000000',
+                    })
+                    .setOrigin(1, 0.5)
+            },
+        })
     }
 
     public addNumTankKilled(): void {

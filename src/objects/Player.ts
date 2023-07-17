@@ -39,7 +39,7 @@ export class Player extends Phaser.GameObjects.Image {
         // variables
         this.health = 1
         this.lastShoot = 0
-        this.speed = 100
+        this.speed = 150
 
         // image
         this.setOrigin(0.5, 0.5)
@@ -114,8 +114,10 @@ export class Player extends Phaser.GameObjects.Image {
         // rotate tank
         if (this.cursors.left.isDown) {
             this.rotation -= 0.02
+            this.barrel.rotation -= 0.02
         } else if (this.cursors.right.isDown) {
             this.rotation += 0.02
+            this.barrel.rotation += 0.02
         }
 
         // rotate barrel
@@ -177,29 +179,17 @@ export class Player extends Phaser.GameObjects.Image {
             this.active = false
             const gameScene = this.scene as GameScene
             gameScene.score.updateHealth(this.health)
-
-            this.scene.scene.launch(SCENE.GAMEOVER, { score: gameScene.score })
-
-            const gameOverScene = this.scene.scene.get(SCENE.GAMEOVER)
-
-            this.scene.tweens.add ({
-                targets: gameOverScene.cameras.main,
-                scrollY: 0,
-                duration: 1000,
-                onStart: () => {
-                    gameOverScene.cameras.main.scrollY = gameOverScene.cameras.main.height
-                },
-                onComplete: () => {
-                    gameOverScene.scene.stop(SCENE.GAME)
-                },
-                onUpdate: () => {
-                    console.log(1)
-                }
-            })
+            this.scene.scene.start(SCENE.GAMEOVER, { score: gameScene.score })
+   
         }
     }
 
     public getHealth(): number {
         return this.health
+    }
+
+    public addHealth(): void {
+        this.health += 0.3
+        if (this.health > 1) this.health = 1
     }
 }

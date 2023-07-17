@@ -152,7 +152,7 @@ export default class GameScene extends Phaser.Scene {
                     this.player.body.y
                 )
 
-                enemy.getBarrel().angle = (angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG
+                enemy.rotateBarrel((angle + Math.PI / 2) * Phaser.Math.RAD_TO_DEG)
             }
 
             return null
@@ -253,5 +253,9 @@ export default class GameScene extends Phaser.Scene {
         bullet.destroy()
         const e = enemy as Enemy
         e.updateHealth()
+
+        if (e.getHealth() <= 0) {
+            this.player.addHealth()
+        }
     }
 }

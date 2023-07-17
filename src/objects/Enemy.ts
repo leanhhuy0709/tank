@@ -52,7 +52,7 @@ export class Enemy extends Phaser.GameObjects.Image {
         this.bullets = this.scene.add.group({
             /*classType: Bullet,*/
             active: true,
-            maxSize: 10,
+            maxSize: 3,
             runChildUpdate: true,
         })
 
@@ -125,5 +125,26 @@ export class Enemy extends Phaser.GameObjects.Image {
             const gameScene = this.scene as GameScene
             gameScene.score.addNumTankKilled()
         }
+    }
+
+    public getHealth(): number {
+        return this.health
+    }
+
+    public rotateBarrel(angle: number): void {
+        const ROTATE_SPEED = 0.2
+
+        let val0 = Math.abs(angle - this.barrel.angle)
+        if (val0 > 180) val0 = 360 - val0
+        if (val0 < ROTATE_SPEED) this.barrel.angle = angle
+
+        let val1 = Math.abs(angle - this.barrel.angle + ROTATE_SPEED)
+        if (val1 > 180) val1 = 360 - val1
+        let val2 = Math.abs(angle - this.barrel.angle - ROTATE_SPEED)
+        if (val2 > 180) val2 = 360 - val2
+
+        if (val1 < val2) this.barrel.angle -= ROTATE_SPEED
+        else this.barrel.angle += ROTATE_SPEED
+        
     }
 }
