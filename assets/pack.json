@@ -86,6 +86,16 @@
         "type": "audio",
         "key": "Devonshire Waltz Allegretto",
         "url": "./assets/audio/Devonshire Waltz Allegretto.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "shoot",
+        "url": "./assets/audio/sfx/shoot.wav"
+      },
+      {
+        "type": "audio",
+        "key": "hit",
+        "url": "./assets/audio/sfx/hit.wav"
       }
     ]
   }
