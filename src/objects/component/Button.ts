@@ -76,4 +76,10 @@ export default class Button extends Phaser.GameObjects.Rectangle {
         this.pointerDownCallBack = func
         return this
     }
+
+    public setPos(x: number, y: number): Button {
+        this.setPosition(x, y)
+        this.text.setPosition(x, y)
+        return this
+    }
 }

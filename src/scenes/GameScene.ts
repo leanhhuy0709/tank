@@ -16,6 +16,8 @@ export default class GameScene extends Phaser.Scene {
 
     private target: Phaser.Math.Vector2
 
+    private pauseBtn: Button
+
     public score: number
 
     public constructor() {
@@ -41,6 +43,9 @@ export default class GameScene extends Phaser.Scene {
             0,
             0
         ) as Phaser.Tilemaps.TilemapLayer
+
+        console.log(this.layer)
+
         this.layer.setCollisionByProperty({ collide: true })
 
         this.obstacles = this.add.group({
@@ -107,9 +112,9 @@ export default class GameScene extends Phaser.Scene {
             return null
         }, this)
 
-        // this.cameras.main.startFollow(this.player)
+        //this.cameras.main.startFollow(this.player)
 
-        new Button({
+        this.pauseBtn = new Button({
             scene: this,
             x: 2 * centerX - 30,
             y: 30,
@@ -152,6 +157,24 @@ export default class GameScene extends Phaser.Scene {
         }, this)
 
         Music.update()
+
+        //handle camera following
+        let x = this.player.body.x - this.cameras.main.width / 2
+        let y = this.player.body.y - this.cameras.main.height / 2
+
+        if (x < 0) x = 0
+        if (y < 0) y = 0
+
+        if (x > this.layer.width - this.cameras.main.width)
+            x = this.layer.width - this.cameras.main.width
+
+        if (y > this.layer.height - this.cameras.main.height)
+            y = this.layer.height - this.cameras.main.height
+
+        this.cameras.main.scrollX = x
+        this.cameras.main.scrollY = y
+
+        this.pauseBtn.setPos(x + this.cameras.main.width - 30, y + 30)
     }
 
     private convertObjects(): void {
