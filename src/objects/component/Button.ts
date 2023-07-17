@@ -6,13 +6,15 @@ export default class Button extends Phaser.GameObjects.Rectangle {
 
     private text: Phaser.GameObjects.Text
 
+    private container: Phaser.GameObjects.Container
+
     private pointerDownCallBack: Function | undefined
 
     public constructor(aParams: IButtonConstructor) {
         super(
             aParams.scene,
-            aParams.x,
-            aParams.y,
+            0,
+            0,
             aParams.width,
             aParams.height,
             aParams.color,
@@ -30,13 +32,15 @@ export default class Button extends Phaser.GameObjects.Rectangle {
         this.on('pointerout', () => this.handlePointerOut())
 
         this.text = this.scene.add
-            .text(aParams.x, aParams.y, 'Button', {
+            .text(0, 0, 'Button', {
                 fontFamily: 'Cambria',
                 fontSize: '32px',
                 color: '#000000',
                 fontStyle: 'bold',
             })
             .setOrigin(0.5, 0.5)
+
+        this.container = this.scene.add.container(aParams.x, aParams.y, [this, this.text])
     }
 
     private handlePointerDown(): void {
@@ -78,8 +82,7 @@ export default class Button extends Phaser.GameObjects.Rectangle {
     }
 
     public setPos(x: number, y: number): Button {
-        this.setPosition(x, y)
-        this.text.setPosition(x, y)
+        this.container.setPosition(x, y)
         return this
     }
 }
