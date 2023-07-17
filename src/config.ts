@@ -1,3 +1,7 @@
+import GameScene from "./scenes/GameScene";
+import LoadingScene from "./scenes/LoadingScene";
+import MenuScene from "./scenes/MenuScene";
+
 export const GameConfig: Phaser.Types.Core.GameConfig = {
     title: 'Tank',
     url: 'https://github.com/leanhhuy0709/tank',
@@ -5,7 +9,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     version: '2.0',
     type: Phaser.AUTO,
     parent: 'Game',
-    scene: [],
+    scene: [LoadingScene, MenuScene, GameScene],
     input: {
         keyboard: true,
     },
@@ -19,6 +23,11 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
             debug: false,
         },
     },
-    backgroundColor: '#000000',
+    scale: {
+        mode: Phaser.Scale.ScaleModes.FIT,
+        autoCenter: Phaser.Scale.Center.CENTER_BOTH,
+        resizeInterval: 1,
+    },
+    backgroundColor: '#123456s',
     render: { pixelArt: false, antialias: true },
 }

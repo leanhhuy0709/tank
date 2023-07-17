@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    entry: ['./src/game.ts'],
+    entry: ['./src/Game.ts'],
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].bundle.js',
@@ -34,7 +34,7 @@ module.exports = {
         },
     },
     plugins: [
-        new HtmlWebpackPlugin({ gameName: 'My Game', template: 'index.html' }),
+        new HtmlWebpackPlugin({ gameName: 'Tank', template: 'index.html' }),
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'assets', to: 'assets' },
