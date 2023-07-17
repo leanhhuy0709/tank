@@ -81,6 +81,11 @@
         "type": "image",
         "key": "treeLarge",
         "url": "./assets/obstacles/tree-large.png"
+      },
+      {
+        "type": "audio",
+        "key": "Devonshire Waltz Allegretto",
+        "url": "./assets/audio/Devonshire Waltz Allegretto.mp3"
       }
     ]
   }

@@ -1,4 +1,5 @@
 import { SCENE } from "../const/const"
+import Music from "../objects/Music"
 
 export default class LoadingScene extends Phaser.Scene {
     private loadingBar: Phaser.GameObjects.Graphics
@@ -43,6 +44,10 @@ export default class LoadingScene extends Phaser.Scene {
 
         // load our package
         this.load.pack('preload', './assets/pack.json', 'preload')
+    }
+
+    public create(): void {
+        Music.init(this)
     }
 
     public update(): void {
