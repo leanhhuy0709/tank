@@ -45,8 +45,6 @@ export default class GameScene extends Phaser.Scene {
             0
         ) as Phaser.Tilemaps.TilemapLayer
 
-        console.log(this.layer)
-
         this.layer.setCollisionByProperty({ collide: true })
 
         this.obstacles = this.add.group({

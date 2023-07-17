@@ -71,8 +71,7 @@ export class Player extends Phaser.GameObjects.Image {
             this.shootingKey = this.scene.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.SPACE
             )
-        }
-        else console.log("No input keyboard!!!!!!!!!")
+        } else console.log('No input keyboard!!!!!!!!!')
 
         // physics
         this.scene.physics.world.enable(this)
@@ -171,14 +170,32 @@ export class Player extends Phaser.GameObjects.Image {
 
     public updateHealth(): void {
         if (this.health > 0) {
-            //this.health -= 0.05
-            this.health -= 1
+            this.health -= 0.05
             this.redrawLifebar()
         } else {
             this.health = 0
             this.active = false
             const gameScene = this.scene as GameScene
-            this.scene.scene.start(SCENE.GAMEOVER, {score: gameScene.score})
+            gameScene.score.updateHealth(this.health)
+
+            this.scene.scene.launch(SCENE.GAMEOVER, { score: gameScene.score })
+
+            const gameOverScene = this.scene.scene.get(SCENE.GAMEOVER)
+
+            this.scene.tweens.add ({
+                targets: gameOverScene.cameras.main,
+                scrollY: 0,
+                duration: 1000,
+                onStart: () => {
+                    gameOverScene.cameras.main.scrollY = gameOverScene.cameras.main.height
+                },
+                onComplete: () => {
+                    gameOverScene.scene.stop(SCENE.GAME)
+                },
+                onUpdate: () => {
+                    console.log(1)
+                }
+            })
         }
     }
 
