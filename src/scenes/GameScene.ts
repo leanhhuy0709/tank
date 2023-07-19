@@ -9,7 +9,7 @@ import Score from '../Score'
 export default class GameScene extends Phaser.Scene {
     private map: Phaser.Tilemaps.Tilemap
     private tileset: Phaser.Tilemaps.Tileset
-    private layer: Phaser.Tilemaps.TilemapLayer
+    public layer: Phaser.Tilemaps.TilemapLayer
 
     public player: Player
     private enemies: Phaser.GameObjects.Group

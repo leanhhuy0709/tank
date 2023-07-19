@@ -245,6 +245,21 @@ export class Player extends Phaser.GameObjects.Image {
             const gameScene = this.scene as GameScene
             gameScene.score.updateHealth(this.health)
 
+            /*
+            const graphics = gameScene.add.graphics()
+            graphics.fillStyle(0xffffff) // Màu sắc của hình tròn (trắng)
+            graphics.beginPath()
+            graphics.arc(100, 100, 100, 0, Math.PI * 2)
+            graphics.closePath()
+            graphics.fill()
+
+            // Tạo mask từ hình tròn với GeometryMask
+            const mask = new Phaser.Display.Masks.GeometryMask(gameScene, graphics)
+
+            // Áp dụng mask cho sprite
+            gameScene.layer.setMask(mask)
+            */
+
             this.scene.scene.start(SCENE.GAMEOVER, { score: gameScene.score })
         }
     }
@@ -254,7 +269,7 @@ export class Player extends Phaser.GameObjects.Image {
     }
 
     public addHealth(): void {
-        this.health += 0.1
+        this.health += 0.2
         if (this.health > 1) this.health = 1
     }
 }

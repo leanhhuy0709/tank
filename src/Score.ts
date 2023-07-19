@@ -86,12 +86,20 @@ export default class Score {
             val: 1,
             duration: 2000,
             onUpdate: () => {
-                text1.setText(`${this.numTankKilled} x 100 = ${Math.floor(tmp.val * this.numTankKilled * 100)}`)
-                text2.setText(`${this.health} x 75 = ${Math.floor(tmp.val * this.health * 75)}`)
+                text1.setText(
+                    `${this.numTankKilled} x 100 = ${Math.floor(
+                        tmp.val * this.numTankKilled * 100
+                    )}`
+                )
+                text2.setText(
+                    `${Math.floor(this.health * 100)} x 75 = ${Math.floor(
+                        tmp.val * this.health * 75 * 100
+                    )}`
+                )
             },
             onComplete: () => {
                 scene.add
-                    .text(x + 280, y + 30, `${this.numTankKilled * 100 + this.health * 75}`, {
+                    .text(x + 280, y + 30, `${Math.floor(this.numTankKilled * 100 + this.health * 75 * 100)}`, {
                         fontSize: '30px',
                         fontFamily: 'Cambria',
                         color: '#000000',
