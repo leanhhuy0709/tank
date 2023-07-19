@@ -124,6 +124,7 @@ export class Enemy extends Phaser.GameObjects.Image {
             this.active = false
             const gameScene = this.scene as GameScene
             gameScene.score.addNumTankKilled()
+            gameScene.player.addHealth()
         }
     }
 

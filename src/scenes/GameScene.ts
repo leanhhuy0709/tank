@@ -11,7 +11,7 @@ export default class GameScene extends Phaser.Scene {
     private tileset: Phaser.Tilemaps.Tileset
     private layer: Phaser.Tilemaps.TilemapLayer
 
-    private player: Player
+    public player: Player
     private enemies: Phaser.GameObjects.Group
     private obstacles: Phaser.GameObjects.Group
 
@@ -253,9 +253,5 @@ export default class GameScene extends Phaser.Scene {
         bullet.destroy()
         const e = enemy as Enemy
         e.updateHealth()
-
-        if (e.getHealth() <= 0) {
-            this.player.addHealth()
-        }
     }
 }
