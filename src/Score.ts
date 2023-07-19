@@ -60,14 +60,14 @@ export default class Score {
             .setOrigin(1, 0.5)
 
         const text2 = scene.add
-            .text(x + 280, y - 20, `${this.health} x 75 = ${this.health * 75}`, {
+            .text(x + 280, y - 20, `${this.health} x 10 = ${this.health * 10}`, {
                 fontSize: '30px',
                 fontFamily: 'Cambria',
                 color: '#000000',
             })
             .setOrigin(1, 0.5)
 
-        highScore = Math.max(this.numTankKilled * 100 + this.health * 75, highScore)
+        highScore = Math.max(this.numTankKilled * 100 + this.health * 10, highScore)
 
         scene.add
             .text(x + 280, y + 80, `${highScore}`, {
@@ -92,14 +92,14 @@ export default class Score {
                     )}`
                 )
                 text2.setText(
-                    `${Math.floor(this.health * 100)} x 75 = ${Math.floor(
-                        tmp.val * this.health * 75 * 100
+                    `${this.health} x 10 = ${Math.floor(
+                        tmp.val * this.health * 10
                     )}`
                 )
             },
             onComplete: () => {
                 scene.add
-                    .text(x + 280, y + 30, `${Math.floor(this.numTankKilled * 100 + this.health * 75 * 100)}`, {
+                    .text(x + 280, y + 30, `${Math.floor(this.numTankKilled * 100 + this.health * 10)}`, {
                         fontSize: '30px',
                         fontFamily: 'Cambria',
                         color: '#000000',

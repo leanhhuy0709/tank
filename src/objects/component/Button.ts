@@ -10,6 +10,8 @@ export default class Button extends Phaser.GameObjects.Rectangle {
 
     private pointerDownCallBack: Function | undefined
 
+    private isDown = false
+
     public constructor(aParams: IButtonConstructor) {
         super(
             aParams.scene,
@@ -46,11 +48,15 @@ export default class Button extends Phaser.GameObjects.Rectangle {
     private handlePointerDown(): void {
         this.fillColor = this.color2
 
-        if (this.pointerDownCallBack) this.pointerDownCallBack()
+        this.isDown = true
     }
 
     private handlePointerUp(): void {
         this.fillColor = this.color1
+
+        if (this.pointerDownCallBack && this.isDown) this.pointerDownCallBack()
+
+        this.isDown = false
     }
 
     private handlePointerOver(): void {

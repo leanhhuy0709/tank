@@ -121,13 +121,14 @@ export class Enemy extends Phaser.GameObjects.Image {
         if (this.health > 0) {
             this.health -= 0.05
             this.redrawLifebar()
-        } else {
+        } 
+        if (this.health < 0) {
             this.health = 0
             this.active = false
             
             gameScene.score.addNumTankKilled()
             gameScene.player.addHealth()
-            gameScene.score.updateHealth(gameScene.player.getHealth())
+            gameScene.score.updateHealth(Math.floor(gameScene.player.getHealth() * 100))
             if (gameScene.score.getNumTankKilled() == 7)
             {
                 this.scene.scene.start(SCENE.GAMEOVER, { score: gameScene.score, isWin: true })
