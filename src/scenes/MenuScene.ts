@@ -29,7 +29,7 @@ export default class MenuScene extends Phaser.Scene {
                 .setOrigin(0.5, 0.5)
         )
 
-        const btn1 = new Button({
+        new Button({
             scene: this,
             x: centerX,
             y: centerY - 100,
@@ -52,7 +52,7 @@ export default class MenuScene extends Phaser.Scene {
                 })
             })
 
-        const btn2 = new Button({
+        new Button({
             scene: this,
             x: centerX,
             y: centerY,
@@ -68,7 +68,7 @@ export default class MenuScene extends Phaser.Scene {
                 this.scene.start(SCENE.SETTING)
             })
 
-        const btn3 = new Button({
+        new Button({
             scene: this,
             x: centerX,
             y: centerY + 100,

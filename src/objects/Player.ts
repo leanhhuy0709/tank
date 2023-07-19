@@ -20,10 +20,11 @@ export class Player extends Phaser.GameObjects.Image {
     private bullets: Phaser.GameObjects.Group
 
     // input
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys
-    private rotateKeyLeft: Phaser.Input.Keyboard.Key
-    private rotateKeyRight: Phaser.Input.Keyboard.Key
-    private shootingKey: Phaser.Input.Keyboard.Key
+    private upKey: Phaser.Input.Keyboard.Key
+    private downKey: Phaser.Input.Keyboard.Key
+    private leftKey: Phaser.Input.Keyboard.Key
+    private rightKey: Phaser.Input.Keyboard.Key
+    private isMouseDown: boolean
 
     public getBullets(): Phaser.GameObjects.Group {
         return this.bullets
@@ -34,6 +35,24 @@ export class Player extends Phaser.GameObjects.Image {
 
         this.initImage()
         this.scene.add.existing(this)
+
+        this.scene.input.on(
+            'pointerdown',
+            () => {
+                this.isMouseDown = true
+            },
+            this
+        )
+        this.scene.input.on(
+            'pointerup',
+            () => {
+                this.isMouseDown = false
+            },
+            this
+        )
+        this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+            this.rotateBarrel(pointer.worldX, pointer.worldY)
+        })
     }
 
     private initImage() {
@@ -66,12 +85,10 @@ export class Player extends Phaser.GameObjects.Image {
         // input
 
         if (this.scene.input.keyboard) {
-            this.cursors = this.scene.input.keyboard.createCursorKeys()
-            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-            this.shootingKey = this.scene.input.keyboard.addKey(
-                Phaser.Input.Keyboard.KeyCodes.SPACE
-            )
+            this.upKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+            this.downKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+            this.leftKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+            this.rightKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
         } else console.log('No input keyboard!!!!!!!!!')
 
         // physics
@@ -96,41 +113,85 @@ export class Player extends Phaser.GameObjects.Image {
     private handleInput() {
         // move tank forward
         // small corrections with (- MATH.PI / 2) to align tank correctly
-        if (this.cursors.up.isDown) {
-            this.scene.physics.velocityFromRotation(
-                this.rotation - Math.PI / 2,
-                this.speed,
-                this.body.velocity
-            )
-        } else if (this.cursors.down.isDown) {
-            this.scene.physics.velocityFromRotation(
-                this.rotation - Math.PI / 2,
-                -this.speed,
-                this.body.velocity
-            )
-        } else {
-            this.body.setVelocity(0, 0)
-        }
+
+        this.scene.physics.velocityFromRotation(
+            this.rotation - Math.PI / 2,
+            this.speed,
+            this.body.velocity
+        )
+
+        let isInput = false
 
         // rotate tank
-        if (this.cursors.left.isDown) {
-            this.rotation -= 0.02
-            this.barrel.rotation -= 0.02
-        } else if (this.cursors.right.isDown) {
-            this.rotation += 0.02
-            this.barrel.rotation += 0.02
+        if (this.upKey.isDown && this.leftKey.isDown) {
+            this.rotateToRotation(-Math.PI / 4)
+            isInput = true
+        } else if (this.upKey.isDown && this.rightKey.isDown) {
+            this.rotateToRotation(Math.PI / 4)
+            isInput = true
+        } else if (this.downKey.isDown && this.leftKey.isDown) {
+            this.rotateToRotation((-3 * Math.PI) / 4)
+            isInput = true
+        } else if (this.downKey.isDown && this.rightKey.isDown) {
+            this.rotateToRotation((3 * Math.PI) / 4)
+            isInput = true
+        } else if (this.upKey.isDown) {
+            this.rotateToRotation(0)
+            isInput = true
+        } else if (this.downKey.isDown) {
+            this.rotateToRotation(Math.PI)
+            isInput = true
+        } else if (this.leftKey.isDown) {
+            this.rotateToRotation(-Math.PI / 2)
+            isInput = true
+        } else if (this.rightKey.isDown) {
+            this.rotateToRotation(Math.PI / 2)
+            isInput = true
         }
 
-        // rotate barrel
-        if (this.rotateKeyLeft.isDown) {
-            this.barrel.rotation -= 0.05
-        } else if (this.rotateKeyRight.isDown) {
-            this.barrel.rotation += 0.05
+        if (!isInput) {
+            this.body.setVelocity(0, 0)
         }
     }
 
+    private rotateBarrel(x: number, y: number): void {
+        const rotation = Phaser.Math.Angle.Between(this.x, this.y, x, y) + Math.PI / 2
+        const ROTATE_VALUE = 0.1
+        let rot = this.barrel.rotation
+
+        if (Math.abs(rot - rotation) > Math.abs(rot - rotation + Math.PI * 2)) rot += Math.PI * 2
+        if (Math.abs(rot - rotation) > Math.abs(rot - rotation - Math.PI * 2)) rot -= Math.PI * 2
+
+        if (Math.abs(rot - rotation) < ROTATE_VALUE) {
+            rot = rotation
+            this.barrel.rotation = rot
+        } else if (rot > rotation) rot -= ROTATE_VALUE
+        else if (rot < rotation) rot += ROTATE_VALUE
+        this.barrel.rotation = rot
+    }
+
+    private rotateToRotation(rotation: number): boolean {
+        const ROTATE_VALUE = 0.1
+
+        let rot = this.rotation
+
+        if (Math.abs(rot - rotation) > Math.abs(rot - rotation + Math.PI * 2)) rot += Math.PI * 2
+        if (Math.abs(rot - rotation) > Math.abs(rot - rotation - Math.PI * 2)) rot -= Math.PI * 2
+
+        if (Math.abs(rot - rotation) < ROTATE_VALUE) {
+            rot = rotation
+            this.rotation = rot
+            return true
+        } else if (rot > rotation) rot -= ROTATE_VALUE
+        else if (rot < rotation) rot += ROTATE_VALUE
+
+        this.rotation = rot
+
+        return false
+    }
+
     private handleShooting(): void {
-        if (this.shootingKey.isDown && this.scene.time.now > this.lastShoot) {
+        if (this.isMouseDown && this.scene.time.now > this.lastShoot) {
             this.scene.cameras.main.shake(20, 0.005)
             this.scene.tweens.add({
                 targets: this,
@@ -177,13 +238,13 @@ export class Player extends Phaser.GameObjects.Image {
         if (this.health > 0) {
             this.health -= 0.05
             this.redrawLifebar()
+            Music.hitSfx.play()
         } else {
             this.health = 0
             this.active = false
             const gameScene = this.scene as GameScene
             gameScene.score.updateHealth(this.health)
             this.scene.scene.start(SCENE.GAMEOVER, { score: gameScene.score })
-   
         }
     }
 
