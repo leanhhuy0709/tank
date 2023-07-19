@@ -108,4 +108,8 @@ export default class Score {
     public updateHealth(health: number): void {
         this.health = health
     }
+
+    public getNumTankKilled(): number {
+        return this.numTankKilled
+    }
 }

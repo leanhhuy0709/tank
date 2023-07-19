@@ -6,6 +6,7 @@ import Button from '../objects/component/Button'
 export default class GameOverScene extends Phaser.Scene {
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
     private score: Score
+    private isWin: boolean
 
     public constructor() {
         super({
@@ -13,8 +14,10 @@ export default class GameOverScene extends Phaser.Scene {
         })
     }
 
-    public init(data: {score: Score}): void {
+    public init(data: { score: Score; isWin?: boolean }): void {
         this.score = data.score
+        if (data.isWin) this.isWin = true
+        else this.isWin = false
     }
 
     public create(): void {
@@ -29,7 +32,7 @@ export default class GameOverScene extends Phaser.Scene {
                     this.sys.canvas.width / 2,
                     this.sys.canvas.height / 2 - 400,
                     'font',
-                    'GAME OVER',
+                    this.isWin ? 'YOUWIN' : 'GAME OVER',
                     100
                 )
                 .setOrigin(0.5, 0.5)

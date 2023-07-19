@@ -244,6 +244,7 @@ export class Player extends Phaser.GameObjects.Image {
             this.active = false
             const gameScene = this.scene as GameScene
             gameScene.score.updateHealth(this.health)
+
             this.scene.scene.start(SCENE.GAMEOVER, { score: gameScene.score })
         }
     }
