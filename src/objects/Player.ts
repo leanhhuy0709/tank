@@ -59,7 +59,7 @@ export class Player extends Phaser.GameObjects.Image {
         // variables
         this.health = 1
         this.lastShoot = 0
-        this.speed = 200
+        this.speed = 150
 
         // image
         this.setOrigin(0.5, 0.5)
