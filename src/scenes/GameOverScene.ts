@@ -32,7 +32,7 @@ export default class GameOverScene extends Phaser.Scene {
                     this.sys.canvas.width / 2,
                     this.sys.canvas.height / 2 - 400,
                     'font',
-                    this.isWin ? 'YOUWIN' : 'GAME OVER',
+                    this.isWin ? 'YOU WIN' : 'GAME OVER',
                     100
                 )
                 .setOrigin(0.5, 0.5)

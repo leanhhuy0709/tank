@@ -271,5 +271,6 @@ export class Player extends Phaser.GameObjects.Image {
     public addHealth(): void {
         this.health += 0.2
         if (this.health > 1) this.health = 1
+        this.redrawLifebar()
     }
 }

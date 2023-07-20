@@ -122,7 +122,7 @@ export class Enemy extends Phaser.GameObjects.Image {
             this.health -= 0.05
             this.redrawLifebar()
         } 
-        if (this.health < 0) {
+        if (this.health <= 0) {
             this.health = 0
             this.active = false
             
