@@ -26,7 +26,9 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
         },
     },
     scale: {
-        mode: Phaser.Scale.ScaleModes.RESIZE
+        mode: Phaser.Scale.ScaleModes.FIT,
+        autoCenter: Phaser.Scale.Center.CENTER_BOTH,
+        resizeInterval: 1,
     },
     backgroundColor: '#123456s',
     render: { pixelArt: false, antialias: true },

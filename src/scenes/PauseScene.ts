@@ -61,7 +61,8 @@ export default class PauseScene extends Phaser.Scene {
             .setContent('Setting')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.SETTING)
+                this.scene.pause(SCENE.PAUSE)
+                this.scene.launch(SCENE.SETTING, {prevScene: SCENE.PAUSE})
             })
 
         new Button({

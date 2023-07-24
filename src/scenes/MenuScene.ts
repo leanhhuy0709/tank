@@ -65,7 +65,8 @@ export default class MenuScene extends Phaser.Scene {
             .setContent('Setting')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.SETTING)
+                this.scene.pause(SCENE.MENU)
+                this.scene.launch(SCENE.SETTING, {prevScene: SCENE.MENU})
             })
 
         new Button({

@@ -3,10 +3,17 @@ import Music from '../objects/Music'
 import Button from '../objects/component/Button'
 
 export default class SettingScene extends Phaser.Scene {
+    
+    private prevScene: string
+
     public constructor() {
         super({
             key: SCENE.SETTING,
         })
+    }
+
+    public init(data: {prevScene: string}): void {
+        this.prevScene = data.prevScene
     }
 
     public create(): void {
@@ -32,7 +39,7 @@ export default class SettingScene extends Phaser.Scene {
             width: 75,
             height: 75,
             color: 0x00a86b,
-            hoverColor: 0x2e8b57,
+            hoverColor: 0x2e8b57
         })
             .setOrigin(0.5, 0.5)
             .setContent('-')
@@ -49,7 +56,7 @@ export default class SettingScene extends Phaser.Scene {
             width: 75,
             height: 75,
             color: 0x00a86b,
-            hoverColor: 0x2e8b57,
+            hoverColor: 0x2e8b57
         })
             .setOrigin(0.5, 0.5)
             .setContent('+')
@@ -72,7 +79,8 @@ export default class SettingScene extends Phaser.Scene {
             .setContent('Exit')
             .setTextSize(50)
             .setFunction(() => {
-                this.scene.start(SCENE.MENU)
+                this.scene.stop(SCENE.SETTING)
+                this.scene.resume(this.prevScene)
             })
     }
 }

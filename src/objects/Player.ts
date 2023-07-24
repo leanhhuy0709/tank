@@ -212,10 +212,10 @@ export class Player extends Phaser.GameObjects.Image {
                     new Bullet({
                         scene: this.scene,
                         rotation: this.barrel.rotation,
-                        x: this.barrel.x,
-                        y: this.barrel.y,
+                        x: this.barrel.x + this.barrel.height * Math.sin(this.barrel.rotation),
+                        y: this.barrel.y - this.barrel.height * Math.cos(this.barrel.rotation),
                         texture: 'bulletBlue',
-                    })
+                    }).setOrigin(0.5, 0.5)
                 )
 
                 Music.shootSfx.play()

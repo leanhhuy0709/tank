@@ -96,8 +96,8 @@ export class Enemy extends Phaser.GameObjects.Image {
                     new Bullet({
                         scene: this.scene,
                         rotation: this.barrel.rotation,
-                        x: this.barrel.x,
-                        y: this.barrel.y,
+                        x: this.barrel.x + this.barrel.height * Math.sin(this.barrel.rotation),
+                        y: this.barrel.y - this.barrel.height * Math.cos(this.barrel.rotation),
                         texture: 'bulletRed',
                     })
                 )

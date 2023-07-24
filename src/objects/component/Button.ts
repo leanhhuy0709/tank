@@ -11,6 +11,7 @@ export default class Button extends Phaser.GameObjects.Rectangle {
     private pointerDownCallBack: Function | undefined
 
     private isDown = false
+    private canHold = false
 
     public constructor(aParams: IButtonConstructor) {
         super(
@@ -26,6 +27,7 @@ export default class Button extends Phaser.GameObjects.Rectangle {
 
         if (aParams.color) this.color1 = aParams.color
         if (aParams.hoverColor) this.color2 = aParams.hoverColor
+        if (aParams.canHold) this.canHold = true
 
         this.setInteractive()
         this.on('pointerdown', () => this.handlePointerDown())
@@ -47,14 +49,14 @@ export default class Button extends Phaser.GameObjects.Rectangle {
 
     private handlePointerDown(): void {
         this.fillColor = this.color2
-
+        if (this.canHold && this.pointerDownCallBack) this.pointerDownCallBack()
         this.isDown = true
     }
 
     private handlePointerUp(): void {
         this.fillColor = this.color1
 
-        if (this.pointerDownCallBack && this.isDown) this.pointerDownCallBack()
+        if (this.pointerDownCallBack && this.isDown && !this.canHold) this.pointerDownCallBack()
 
         this.isDown = false
     }

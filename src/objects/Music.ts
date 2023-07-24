@@ -15,6 +15,8 @@ export default class Music {
         | Phaser.Sound.WebAudioSound
         | Phaser.Sound.NoAudioSound
         | Phaser.Sound.HTML5AudioSound
+    
+    private static volume: number
 
     public static init(scene: Phaser.Scene): void {
         Music.music = scene.sound.add(MUSIC.Devonshire_Waltz_Allegretto)
@@ -24,14 +26,18 @@ export default class Music {
         Music.shootSfx.volume = 0.5
         Music.hitSfx = scene.sound.add(MUSIC.Hit_SFX)
         Music.hitSfx.volume = 0.5
+
+
+        Music.setVolume(0.5)
     }
 
     public static setVolume(volume: number): void {
         if (volume < 0) volume = 0
         if (volume > 1) volume = 1
+        Music.volume = volume
         Music.music.setVolume(volume)
-        Music.shootSfx.setVolume(volume)
-        Music.hitSfx.setVolume(volume)
+        Music.shootSfx.setVolume(volume * 0.1)
+        Music.hitSfx.setVolume(volume * 0.1)
     }
 
     public static play(): void {
@@ -57,6 +63,6 @@ export default class Music {
     }
 
     public static getVolume(): number {
-        return Music.music.volume
+        return Music.volume
     }
 }

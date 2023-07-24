@@ -7,4 +7,5 @@ export interface IButtonConstructor {
     color?: number
     alpha?: number
     hoverColor?: number
+    canHold?: boolean
 }
